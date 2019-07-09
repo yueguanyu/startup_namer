@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:startup_namer/screens/location_detail/location_detail.dart';
 import 'package:startup_namer/screens/locations/locations.dart';
+import 'package:startup_namer/screens/big_bloc/index.dart';
+import 'package:startup_namer/screens/home/index.dart';
 import 'package:startup_namer/style.dart';
 
 const LocationsRoute = '/';
@@ -23,7 +25,7 @@ class App extends StatelessWidget {
       Widget screen;
       switch (settings.name) {
         case LocationsRoute:
-          screen = Locations();
+          screen = BigBlocPage();
           break;
         case LocationDetailRoute:
           screen = LocationDetail(arguments['id']);

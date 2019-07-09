@@ -52,9 +52,23 @@ class HomeScreenState extends State<HomeScreen> {
             ));
           }
           return new Container(
+            child: GestureDetector(
+              onTap: () => {
+                _homeBloc.incrementCounter.add(null)
+              },
+              key: Key('content_id_${_homeBloc.outCounter}'),
               child: new Center(
-            child: new Text("В разработке"),
-          ));
+                ///注意这里，通过stream构建ui
+                child: StreamBuilder<int>(
+                  stream: _homeBloc.outCounter,
+                  initialData: 0,
+                  builder: (BuildContext context, AsyncSnapshot<int> snapshot){
+                    return Text('You hit me: ${snapshot.data} times');
+                  }
+                ),
+              ),
+            ),
+          );
         });
   }
 }

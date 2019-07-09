@@ -11,5 +11,11 @@ class BigBlocRepository {
     await Future.delayed(new Duration(seconds: 2));
   }
 
-  void test() {}
+  BigBlocRepository();
+
+  static int index = 1;
+
+  void test() {
+    index++;
+  }
 }

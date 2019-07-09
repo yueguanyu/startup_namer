@@ -34,12 +34,15 @@ class BigBlocScreenState extends State<BigBlocScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BigBlocEvent, BigBlocState>(
+    return BlocProvider<BigBlocBloc>(
+      builder: (BuildContext context) => widget._bigBlocBloc,
+      child: BlocBuilder<BigBlocEvent, BigBlocState>(
         bloc: widget._bigBlocBloc,
         builder: (
           BuildContext context,
           BigBlocState currentState,
         ) {
+          print('currentState: $currentState');
           if (currentState is UnBigBlocState) {
             return Center(
               child: CircularProgressIndicator(),
@@ -52,9 +55,62 @@ class BigBlocScreenState extends State<BigBlocScreen> {
             ));
           }
           return new Container(
+            child: GestureDetector(
+              onTap: () => {
+                _bigBlocBloc.incrementCounter.add(null)
+              },
+              key: Key('content_id_${_bigBlocBloc.outCounter}'),
               child: new Center(
-            child: new Text("В разработке"),
-          ));
-        });
+                ///注意这里，通过stream构建ui
+                child: StreamBuilder<int>(
+                  stream: _bigBlocBloc.outCounter,
+                  initialData: 0,
+                  builder: (BuildContext context, AsyncSnapshot<int> snapshot){
+                    return Text('You hit me: ${snapshot.data} times');
+                  }
+                ),
+              ),
+            ),
+          );
+        })
+    );
+    // return BlocBuilder<BigBlocEvent, BigBlocState>(
+    //     bloc: widget._bigBlocBloc,
+    //     builder: (
+    //       BuildContext context,
+    //       BigBlocState currentState,
+    //     ) {
+    //       print('currentState: $currentState');
+    //       if (currentState is UnBigBlocState) {
+    //         return Center(
+    //           child: CircularProgressIndicator(),
+    //         );
+    //       }
+    //       if (currentState is ErrorBigBlocState) {
+    //         return new Container(
+    //           child: new Center(
+    //           child: new Text(currentState.errorMessage ?? 'Error' ),
+    //         ));
+    //       }
+    //       return new Container(
+    //         child: GestureDetector(
+    //           onTap: () => {
+    //             _bigBlocBloc.incrementCounter.add(null)
+    //           },
+    //           key: Key('content_id_${_bigBlocBloc.outCounter}'),
+    //           child: new Center(
+    //             ///注意这里，通过stream构建ui
+    //             child: StreamBuilder<int>(
+    //               stream: _bigBlocBloc.outCounter,
+    //               initialData: 0,
+    //               builder: (BuildContext context, AsyncSnapshot<int> snapshot){
+    //                 return Text('You hit me: ${snapshot.data} times');
+    //               }
+    //             ),
+    //           ),
+    //         ),
+    //       );
+    //     });
   }
+
 }

@@ -1,10 +1,11 @@
 import 'dart:async';
+import 'package:flutter/widgets.dart';
 import 'package:startup_namer/screens/big_bloc/index.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 abstract class BigBlocEvent {
-  Future<BigBlocState> applyAsync(
+  Future applyAsync(
       {BigBlocState currentState, BigBlocBloc bloc});
   final BigBlocProvider _bigBlocProvider = new BigBlocProvider();
 }
