@@ -36,6 +36,13 @@ class BigBlocScreenState extends State<BigBlocScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<BigBlocEvent, BigBlocState>(
         bloc: widget._bigBlocBloc,
+        condition: (previousState, currentState) {
+          // return true/false to determine whether or not
+          // to rebuild the widget with currentState
+          print("previousState: $previousState");
+          print("currentState: $currentState");
+          return true;
+        },
         builder: (
           BuildContext context,
           BigBlocState currentState,
