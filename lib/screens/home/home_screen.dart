@@ -48,8 +48,9 @@ class HomeScreenState extends State<HomeScreen> {
           if (currentState is ErrorHomeState) {
             return new Container(
               child: new Center(
-              child: new Text(currentState.errorMessage ?? 'Error' ),
-            ));
+                child: new Text(currentState.errorMessage ?? 'Error' ),
+              )
+            );
           }
           return new Container(
             child: GestureDetector(
